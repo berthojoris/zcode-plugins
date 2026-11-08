@@ -11,6 +11,7 @@ __pycache__/
 mirror-failure.txt
 mirror-result.txt
 publish-failure.txt
+pnpm-build.log
 
 # MCP App development dependencies and generated license intermediates.
 node_modules/
