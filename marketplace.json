@@ -169,6 +169,37 @@
       }
     },
     {
+      "name": "maestro",
+      "source": "./external_plugins/maestro",
+      "description": "Multi-agent orchestration for ZCode: a dispatch protocol plus six least-privilege specialist sub-agents (scout, elder, atelier, wright, lens, tribunal) that the main agent routes work to.",
+      "description_i18n": {
+        "en": "Multi-agent orchestration for ZCode: a dispatch protocol plus six least-privilege specialist sub-agents (scout, elder, atelier, wright, lens, tribunal) that the main agent routes work to.",
+        "zh-CN": "ZCode 多智能体编排：提供调度协议与六类最小权限的专业子智能体（scout、elder、atelier、wright、lens、tribunal），由主智能体按任务路由分发。"
+      },
+      "version": "0.1.0",
+      "author": {
+        "name": "Bertho Joris"
+      },
+      "category": "developer-tools",
+      "keywords": [
+        "orchestration",
+        "multi-agent",
+        "subagents",
+        "delegation",
+        "workflow"
+      ],
+      "examplePrompts": [
+        "Orchestrate a refactor of the auth module: scout the usages, have wright apply the change in lanes, and verify with the project checks",
+        "Review this design proposal with a tribunal panel before we implement it"
+      ],
+      "examplePrompts_i18n": {
+        "zh-CN": [
+          "编排一次 auth 模块重构：先让 scout 摸清调用点，再由 wright 分路线落地，最后跑项目检查验证",
+          "在我们实现之前，先用 tribunal 评审团审查这份设计方案"
+        ]
+      }
+    },
+    {
       "name": "accounting-and-reporting",
       "source": "./plugins/accounting-and-reporting",
       "displayName": "核算与报告",
