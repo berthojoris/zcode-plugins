@@ -69,8 +69,10 @@ const patchDir = join(source, "patches");
     Promise.all([finished(archive), finished(unpack)]).then(accept, reject);
   });
   for (const patch of patches) await run("git", ["apply", join(patchDir, patch.name)], patched);
-  await run("python3", [join(runtime, "prepare-automation.py"), patched, config.name], root);
-  await run("python3", [join(runtime, "prepare-fonts.py"), patched, config.name], root);
+  const python = process.platform === "win32" ? "python" : "python3";
+  const pythonArgs = process.platform === "win32" ? ["-X", "utf8"] : [];
+  await run(python, [...pythonArgs, join(runtime, "prepare-automation.py"), patched, config.name], root);
+  await run(python, [...pythonArgs, join(runtime, "prepare-fonts.py"), patched, config.name], root);
   upstream = patched;
 }
 const site = join(upstream, "dist/web");
