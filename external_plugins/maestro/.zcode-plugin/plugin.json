@@ -1,11 +1,11 @@
 {
   "name": "maestro",
-  "description": "Multi-agent orchestration for ZCode: a dispatch protocol plus six least-privilege specialist sub-agents (scout, elder, atelier, wright, lens, tribunal) that the main agent routes work to.",
+  "description": "Multi-agent orchestration for ZCode: a dispatch protocol, four companion workflow skills (codemap, simplify, deepwork, verification), a PreToolUse Bash mutation guard, and six least-privilege specialist sub-agents (scout, elder, atelier, wright, lens, tribunal).",
   "description_i18n": {
-    "en": "Multi-agent orchestration for ZCode: a dispatch protocol plus six least-privilege specialist sub-agents (scout, elder, atelier, wright, lens, tribunal) that the main agent routes work to.",
-    "zh-CN": "ZCode 多智能体编排：提供调度协议与六类最小权限的专业子智能体（scout、elder、atelier、wright、lens、tribunal），由主智能体按任务路由分发。"
+    "en": "Multi-agent orchestration for ZCode: a dispatch protocol, four companion workflow skills (codemap, simplify, deepwork, verification), a PreToolUse Bash mutation guard, and six least-privilege specialist sub-agents (scout, elder, atelier, wright, lens, tribunal).",
+    "zh-CN": "ZCode 多智能体编排：提供调度协议、四项配套工作流技能（codemap、simplify、deepwork、verification）、PreToolUse Bash 只读防护 Hook，以及六类最小权限的专业子智能体（scout、elder、atelier、wright、lens、tribunal）。"
   },
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "Bertho Joris"
   },
@@ -14,7 +14,11 @@
     "multi-agent",
     "subagents",
     "delegation",
-    "workflow"
+    "workflow",
+    "codemap",
+    "simplify",
+    "deepwork",
+    "hooks"
   ],
   "commands": "commands",
   "skills": "skills",

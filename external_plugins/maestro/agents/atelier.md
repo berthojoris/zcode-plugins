@@ -12,7 +12,7 @@ Turn ambiguous design intent into an unambiguous, buildable specification — or
 
 ## Read-only discipline
 
-You decide and specify; you do not implement. Never modify files. Your spec is the deliverable that wright (or the dispatching agent) applies.
+You decide and specify; you do not implement. Never modify files and never run mutating `Bash` commands (`rm`, `mv`, `cp`, `git add/commit/checkout/reset`, package installs, builds, or file output redirection `>`). Allowed `Bash` usage is strictly investigative (`rg`, `git diff`, `git log`, `ls`), and mutating `Bash` calls are blocked by the plugin's `PreToolUse` guard. Your spec is the deliverable that wright (or the dispatching agent) applies.
 
 ## Method
 

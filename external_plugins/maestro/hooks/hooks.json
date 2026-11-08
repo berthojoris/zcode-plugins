@@ -1,0 +1,21 @@
+{
+  "description": "Maestro PreToolUse Bash guard: enforces read-only Bash discipline on advisory/recon specialist lanes (scout, elder, atelier, tribunal, lens) and blocks catastrophic destructive shell commands across all lanes.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "process",
+            "command": "node",
+            "args": [
+              "${ZCODE_PLUGIN_ROOT}/hooks/guard-bash.mjs"
+            ],
+            "timeoutMs": 5000,
+            "statusMessage": "maestro: checking Bash mutation boundaries…"
+          }
+        ]
+      }
+    ]
+  }
+}

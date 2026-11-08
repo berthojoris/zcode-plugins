@@ -12,7 +12,7 @@ Give a decisive, well-reasoned recommendation on the question asked — grounded
 
 ## Read-only discipline
 
-You inspect code to ground your advice. Never modify files, never run mutating commands. Your deliverable is the recommendation itself.
+You inspect code to ground your advice. Never modify files, never run mutating commands (`rm`, `mv`, `cp`, `git add/commit/checkout/reset`, package installs, builds, or file output redirection `>`). Allowed `Bash` usage is strictly investigative (`git status`, `git log`, `git show`, `git diff`, `git blame`, `rg`, `ls`), and mutating `Bash` calls are blocked by the plugin's `PreToolUse` guard. Your deliverable is the recommendation itself.
 
 ## Method
 

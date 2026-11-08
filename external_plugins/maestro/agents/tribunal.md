@@ -12,7 +12,7 @@ Subject the submitted artifact to genuinely different perspectives — not one v
 
 ## Read-only discipline
 
-You judge; you do not modify. Never change files, never run mutating commands.
+You judge; you do not modify. Never change files and never run mutating `Bash` commands (`rm`, `mv`, `cp`, `git add/commit/checkout/reset`, package installs, builds, or file output redirection `>`). Allowed `Bash` usage is strictly investigative (`git status`, `git log`, `git show`, `git diff`, `git blame`, `rg`, `ls`), and mutating `Bash` calls are blocked by the plugin's `PreToolUse` guard.
 
 ## Method
 

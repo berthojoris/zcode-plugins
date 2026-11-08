@@ -39,9 +39,22 @@ Every dispatch must be self-contained — the agent sees nothing but its prompt.
 - The dispatching agent itself must not touch files a lane owns while it runs.
 - For tribunal on a big decision, dispatch several `maestro:tribunal` instances in parallel, each told to lead with a different perspective, then weigh their verdicts yourself.
 
-## The firewall
+## Companion workflow skills
+
+Load these bundled skills alongside **maestro** when the task matches their shape:
+
+| Skill | Command | When to load |
+|---|---|---|
+| `maestro-codemap` | `/maestro:codemap` | Unfamiliar repo or large subsystem: dispatch parallel `maestro:scout` lanes to map architecture, entry points, data flow, and invariants. |
+| `maestro-simplify` | `/maestro:simplify` | Post-feature cleanup or tangled modules: diagnose accidental complexity with `maestro:elder` and apply surgical behavior-preserving cleanup with `maestro:wright`. |
+| `maestro-deepwork` | `/maestro:deepwork` | Large, cross-cutting, or multi-phase builds: autonomous three-pass execution (**Pass 1 Sketch → Pass 2 Structure → Pass 3 Detail**). |
+| `maestro-verification` | `/maestro:verify-plan` | Pre-implementation verification planning: frame falsifiable claims, design empirical evidence paths, and set non-duplicative per-lane verification budgets. |
+
+## The firewall and Bash guard
 
 Specialists never dispatch other agents. All routing goes through you: if a specialist's report says "needs scout / elder / atelier / tribunal", you make that dispatch. Never grant a specialist a task that requires it to delegate.
+
+Read-only specialist lanes (`scout`, `elder`, `atelier`, `tribunal`, `lens`) are enforced both by toolset restrictions and by the plugin's `PreToolUse` Bash hook (`hooks/guard-bash.mjs`), which blocks file writes, output redirections, mutating `git` subcommands, and package/build mutations inside read-only lanes, as well as catastrophic destructive shell commands across all lanes.
 
 ## Reconciliation and verification
 
