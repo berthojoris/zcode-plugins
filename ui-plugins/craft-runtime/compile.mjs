@@ -60,7 +60,9 @@ const patchDir = join(source, "patches");
   await mkdir(patched, { recursive: true });
   await new Promise((accept, reject) => {
     const archive = spawn("git", ["-C", upstream, "archive", config.commit], { stdio: ["ignore", "pipe", "inherit"] });
-    const unpack = spawn("tar", ["-x", "-C", patched], { stdio: ["pipe", "inherit", "inherit"] });
+    // GNU tar treats "C:\..." as a remote-tape host:file pair; only forward
+    // slashes are accepted by both GNU tar and Windows bsdtar.
+    const unpack = spawn("tar", ["-x", "-C", patched.replaceAll("\\", "/")], { stdio: ["pipe", "inherit", "inherit"] });
     archive.stdout.pipe(unpack.stdin);
     const finished = (child) => new Promise((ok, fail) => {
       child.on("error", fail);

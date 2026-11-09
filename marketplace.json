@@ -171,12 +171,17 @@
     {
       "name": "maestro",
       "source": "./external_plugins/maestro",
-      "description": "Multi-agent orchestration for ZCode: a dispatch protocol, four companion workflow skills (codemap, simplify, deepwork, verification), a PreToolUse Bash mutation guard, and six least-privilege specialist sub-agents (scout, elder, atelier, wright, lens, tribunal).",
+      "description": "Multi-agent orchestration for ZCode: always-on dispatch protocol (SessionStart + UserPromptSubmit injection), a live agent-status side panel, four companion workflow skills (codemap, simplify, deepwork, verification), a PreToolUse Bash mutation guard, and six least-privilege specialist sub-agents (scout, elder, atelier, wright, lens, tribunal).",
       "description_i18n": {
-        "en": "Multi-agent orchestration for ZCode: a dispatch protocol, four companion workflow skills (codemap, simplify, deepwork, verification), a PreToolUse Bash mutation guard, and six least-privilege specialist sub-agents (scout, elder, atelier, wright, lens, tribunal).",
-        "zh-CN": "ZCode 多智能体编排：提供调度协议、四项配套工作流技能（codemap、simplify、deepwork、verification）、PreToolUse Bash 只读防护 Hook，以及六类最小权限的专业子智能体（scout、elder、atelier、wright、lens、tribunal）。"
+        "en": "Multi-agent orchestration for ZCode: always-on dispatch protocol (SessionStart + UserPromptSubmit injection), a live agent-status side panel, four companion workflow skills (codemap, simplify, deepwork, verification), a PreToolUse Bash mutation guard, and six least-privilege specialist sub-agents (scout, elder, atelier, wright, lens, tribunal).",
+        "zh-CN": "ZCode 多智能体编排：常驻调度协议（SessionStart + UserPromptSubmit 注入）、实时智能体状态面板、四项配套工作流技能（codemap、simplify、deepwork、verification）、PreToolUse Bash 只读防护 Hook，以及六类最小权限的专业子智能体（scout、elder、atelier、wright、lens、tribunal）。"
       },
-      "version": "0.2.0",
+      "version": "0.4.1",
+      "displayName": "Maestro Agents",
+      "displayName_i18n": {
+        "en-US": "Maestro Agents",
+        "zh-CN": "Maestro 智能体"
+      },
       "author": {
         "name": "Bertho Joris"
       },
@@ -190,7 +195,8 @@
         "codemap",
         "simplify",
         "deepwork",
-        "hooks"
+        "hooks",
+        "agent-panel"
       ],
       "examplePrompts": [
         "Orchestrate a refactor of the auth module: scout the usages, have wright apply the change in lanes, and verify with the project checks",
@@ -862,7 +868,9 @@
     },
     {
       "name": "excalidraw",
-      "componentTypes": ["ui"],
+      "componentTypes": [
+        "ui"
+      ],
       "displayName": "Excalidraw",
       "displayName_i18n": {
         "en": "Excalidraw",
@@ -885,7 +893,9 @@
       "name": "photocraft",
       "icon": "https://cdn-zcode.z.ai/zcode/official-plugin/assets/photocraft/icon.png",
       "source": "./external_plugins/photocraft",
-      "componentTypes": ["ui"],
+      "componentTypes": [
+        "ui"
+      ],
       "displayName": "PhotoCraft",
       "displayName_i18n": {
         "en": "PhotoCraft",
@@ -912,7 +922,9 @@
       "name": "vectorcraft",
       "icon": "https://cdn-zcode.z.ai/zcode/official-plugin/assets/vectorcraft/icon.png",
       "source": "./external_plugins/vectorcraft",
-      "componentTypes": ["ui"],
+      "componentTypes": [
+        "ui"
+      ],
       "displayName": "VectorCraft",
       "displayName_i18n": {
         "en": "VectorCraft",
@@ -939,7 +951,9 @@
       "name": "pdfcraft",
       "icon": "https://cdn-zcode.z.ai/zcode/official-plugin/assets/pdfcraft/icon.png",
       "source": "./external_plugins/pdfcraft",
-      "componentTypes": ["ui"],
+      "componentTypes": [
+        "ui"
+      ],
       "displayName": "PdfCraft",
       "displayName_i18n": {
         "en": "PdfCraft",
@@ -966,7 +980,9 @@
       "name": "designcraft",
       "icon": "https://cdn-zcode.z.ai/zcode/official-plugin/assets/designcraft/icon.png",
       "source": "./external_plugins/designcraft",
-      "componentTypes": ["ui"],
+      "componentTypes": [
+        "ui"
+      ],
       "displayName": "DesignCraft",
       "displayName_i18n": {
         "en": "DesignCraft",
@@ -993,7 +1009,9 @@
       "name": "wordcraft",
       "icon": "https://cdn-zcode.z.ai/zcode/official-plugin/assets/wordcraft/icon.png",
       "source": "./external_plugins/wordcraft",
-      "componentTypes": ["ui"],
+      "componentTypes": [
+        "ui"
+      ],
       "displayName": "WordCraft",
       "displayName_i18n": {
         "en": "WordCraft",
@@ -1020,7 +1038,9 @@
       "name": "gridcraft",
       "icon": "https://cdn-zcode.z.ai/zcode/official-plugin/assets/gridcraft/icon.png",
       "source": "./external_plugins/gridcraft",
-      "componentTypes": ["ui"],
+      "componentTypes": [
+        "ui"
+      ],
       "displayName": "GridCraft",
       "displayName_i18n": {
         "en": "GridCraft",
@@ -1047,7 +1067,9 @@
       "name": "deckcraft",
       "icon": "https://cdn-zcode.z.ai/zcode/official-plugin/assets/deckcraft/icon.png",
       "source": "./external_plugins/deckcraft",
-      "componentTypes": ["ui"],
+      "componentTypes": [
+        "ui"
+      ],
       "displayName": "DeckCraft",
       "displayName_i18n": {
         "en": "DeckCraft",
@@ -1074,7 +1096,9 @@
       "name": "cadcraft",
       "icon": "https://cdn-zcode.z.ai/zcode/official-plugin/assets/cadcraft/icon.png",
       "source": "./external_plugins/cadcraft",
-      "componentTypes": ["ui"],
+      "componentTypes": [
+        "ui"
+      ],
       "displayName": "CADCraft",
       "displayName_i18n": {
         "en": "CADCraft",
@@ -1101,7 +1125,9 @@
       "name": "soundcraft",
       "icon": "https://cdn-zcode.z.ai/zcode/official-plugin/assets/soundcraft/icon.png",
       "source": "./external_plugins/soundcraft",
-      "componentTypes": ["ui"],
+      "componentTypes": [
+        "ui"
+      ],
       "displayName": "SoundCraft",
       "displayName_i18n": {
         "en": "SoundCraft",
@@ -1184,7 +1210,9 @@
       },
       "category": "developer-tools",
       "icon": "https://cdn-zcode.z.ai/zcode/official-plugin/assets/kicad/icon.png",
-      "componentTypes": ["ui"],
+      "componentTypes": [
+        "ui"
+      ],
       "displayName": "KiCad",
       "displayName_i18n": {
         "en": "KiCad",

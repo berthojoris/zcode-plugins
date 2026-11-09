@@ -1,6 +1,27 @@
 # maestro
 
-ZCode 多智能体编排插件。安装一套调度协议、四项配套工作流技能（`codemap`、`simplify`、`deepwork`、`verification`）、一个 `PreToolUse` Bash 只读防护 Hook，以及六类最小权限的专业子智能体，由**当前主会话担任编排者（maestro）**，将任务路由给各专家。灵感来自 oh-my-opencode-slim 等编排者/专家工作流，以原生 ZCode 插件组件实现。
+ZCode 多智能体编排插件。安装一套调度协议、四项配套工作流技能（`codemap`、`simplify`、`deepwork`、`verification`）、一个 `SessionStart` + `UserPromptSubmit` 常驻注入 Hook、一个 `PreToolUse` Bash 只读防护 Hook，以及六类最小权限的专业子智能体，由**当前主会话担任编排者（maestro）**，将任务路由给各专家。灵感来自 oh-my-opencode-slim 等编排者/专家工作流，以原生 ZCode 插件组件实现。
+
+## 常驻生效（无需调用）
+
+**Maestro 默认开启。** `hooks/session-inject.mjs` Hook：
+
+- 在 `SessionStart`（startup/clear/compact）时注入一次核心编排契约：当前会话即调度者、专家花名册、直接工作边界与退出开关。
+- 在 `UserPromptSubmit` 时仅当提示看起来较实质时注入一条简短路由提示——主会话随即自动规划路线并派发对应专家（`maestro:scout`、`maestro:elder`、`maestro:atelier`、`maestro:wright`、`maestro:lens`、`maestro:tribunal`）经 Agent 工具（`subagent_type`）执行，无需等待显式调用。琐碎提示不注入提示，避免委托掩盖快速直接答复。
+
+`/maestro` 斜杠命令、`$maestro` 技能与技能自动加载仍作为显式覆盖，重新加载同一协议——会话 Hook 是默认，命令与技能是快捷方式。
+
+**退出**：输入 `/maestro off`（或“no subagents” / “direct mode”）即在本会话内关闭编排，改为直接工作。
+
+## 智能体状态面板（侧边面板 UI）
+
+插件内置 MCP App 界面 **Maestro Agents**，可从宿主面板开关打开，或让智能体调用（`maestro_panel_view` 工具）。面板展示：
+
+- **maestro（编排者）** 卡片：回合运行或有路线派发时显示绿色呼吸 spinner，并附当前提示内容。
+- **六条专家路线**（`scout`、`elder`、`atelier`、`wright`、`lens`、`tribunal`）：路线派发中显示绿色 spinner 与已用时；空闲时静默；并显示上次运行的距今时间与耗时。
+- **近期动态**：最近完成的路线，含耗时与结果（✓/✕）。
+
+实时状态由 `hooks/agent-status.mjs` 追踪器产生（Agent 工具的 `PreToolUse`/`PostToolUse`、`UserPromptSubmit`、`Stop`），经内置 MCP 服务（`dist/server.mjs`，工具 `maestro_status`）提供。自动适配明暗主题，支持中英双语，无网络访问。
 
 ## 成员
 
@@ -31,6 +52,10 @@ ZCode 多智能体编排插件。安装一套调度协议、四项配套工作�
 | `maestro-verification` | `/maestro:verify-plan <变更>` | 实现前验证规划：提炼可证伪断言、设计经验验证路径，并制定不重复的路线测试预算。 |
 
 ## 人的调用方式
+
+- **不调用（默认）** — 像平常一样向主会话提问；实质性请求会自动路由到专家。
+- `/maestro off`（或“no subagents” / “direct mode”）— 本会话内关闭编排，改为直接工作。
+- `/maestro <任务>` — 运行编排模式：规划路线、派发专家、汇总并验证结果（对默认协议的显式覆盖）。
 
 - `/maestro <任务>` —— 以编排模式执行任务：规划路线、派发、汇总、验证。
 - `/maestro:codemap [子系统]` —— 并行派发 `maestro:scout` 生成仓库或子系统架构地图。

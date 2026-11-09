@@ -1,6 +1,27 @@
 # maestro
 
-Multi-agent orchestration for ZCode. The plugin installs a dispatch protocol, four companion workflow skills (`codemap`, `simplify`, `deepwork`, `verification`), a `PreToolUse` Bash mutation guard hook, and six least-privilege specialist sub-agents; **your main session acts as the orchestrator** ("maestro") and routes work to the specialists. Inspired by orchestrator/specialist workflows like oh-my-opencode-slim, rebuilt as native ZCode plugin components.
+Multi-agent orchestration for ZCode. The plugin installs a dispatch protocol, four companion workflow skills (`codemap`, `simplify`, `deepwork`, `verification`), a `SessionStart` + `UserPromptSubmit` always-on injection hook, a `PreToolUse` Bash mutation guard hook, and six least-privilege specialist sub-agents; **your main session acts as the orchestrator** ("maestro") and routes work to the specialists. Inspired by orchestrator/specialist workflows like oh-my-opencode-slim, rebuilt as native ZCode plugin components.
+
+## Always-on (no invocation needed)
+
+**Maestro is on by default.** The `hooks/session-inject.mjs` hook:
+
+- On `SessionStart` (startup/clear/compact), injects the core orchestration contract once: you are the dispatcher, the specialist roster, the direct-work boundary, and the opt-out switch.
+- On `UserPromptSubmit`, injects a compact routing hint only when the prompt looks substantial — the main session then drafts lanes and dispatches the matching specialist(s) (`maestro:scout`, `maestro:elder`, `maestro:atelier`, `maestro:wright`, `maestro:lens`, `maestro:tribunal`) automatically via the Agent tool (`subagent_type`), without waiting to be asked. Trivial prompts get no hint, so delegation never shadows a quick direct answer.
+
+The `/maestro` slash command, the `$maestro` skill, and skill auto-loading remain explicit overrides that re-load the same protocol on demand — the session hooks are the default, commands and skills are shortcuts.
+
+**Opt out**: say `/maestro off`, "no subagents", or "direct mode" to disable orchestration for the rest of the session and act directly.
+
+## Agent status panel (side panel UI)
+
+The plugin ships an MCP App surface — **Maestro Agents** — opened from the host panel toggle or by asking the agent to open it (`maestro_panel_view` tool). It shows:
+
+- **maestro (Orchestrator)** card: pulsing green spinner while a turn is running or lanes are dispatched, with the current prompt.
+- **Six specialist lanes** (`scout`, `elder`, `atelier`, `wright`, `lens`, `tribunal`): a green spinner with elapsed time while a lane is actively dispatched, idle state otherwise, and the last run's recency and duration.
+- **Recent activity feed**: last finished lanes with duration and outcome (✓/✕).
+
+Live state is produced by the `hooks/agent-status.mjs` tracker (`PreToolUse`/`PostToolUse` on the Agent tool, `UserPromptSubmit`, `Stop`) and served by the bundled MCP server (`dist/server.mjs`, tool `maestro_status`). Theme-aware (light/dark), localized (en/zh), no network access.
 
 ## Roster
 
@@ -32,7 +53,9 @@ Design principles carried over from orchestrator/specialist practice:
 
 ## How a person invokes it
 
-- `/maestro <task>` — run a task in orchestrated mode: lanes are planned, dispatched, reconciled, and verified.
+- **Nothing (default)** — prompt the main session as usual; substantial requests are routed to specialists automatically.
+- `/maestro off` (or "no subagents" / "direct mode") — disable orchestration for this session and act directly.
+- `/maestro <task>` — run a task in orchestrated mode: lanes are planned, dispatched, reconciled, and verified (explicit override of the default protocol).
 - `/maestro:codemap [subsystem]` — map the repository or a subsystem in parallel via `maestro:scout`.
 - `/maestro:simplify <module or diff>` — simplify complex code without changing observable behavior.
 - `/maestro:deepwork <complex feature>` — run autonomous three-pass execution (**Sketch → Structure → Detail**).

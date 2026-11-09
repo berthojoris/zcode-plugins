@@ -1,11 +1,11 @@
 {
   "name": "maestro",
-  "description": "Multi-agent orchestration for ZCode: a dispatch protocol, four companion workflow skills (codemap, simplify, deepwork, verification), a PreToolUse Bash mutation guard, and six least-privilege specialist sub-agents (scout, elder, atelier, wright, lens, tribunal).",
+  "description": "Multi-agent orchestration for ZCode: always-on dispatch protocol (SessionStart + UserPromptSubmit injection), a live agent-status side panel, four companion workflow skills (codemap, simplify, deepwork, verification), a PreToolUse Bash mutation guard, and six least-privilege specialist sub-agents (scout, elder, atelier, wright, lens, tribunal).",
   "description_i18n": {
-    "en": "Multi-agent orchestration for ZCode: a dispatch protocol, four companion workflow skills (codemap, simplify, deepwork, verification), a PreToolUse Bash mutation guard, and six least-privilege specialist sub-agents (scout, elder, atelier, wright, lens, tribunal).",
-    "zh-CN": "ZCode 多智能体编排：提供调度协议、四项配套工作流技能（codemap、simplify、deepwork、verification）、PreToolUse Bash 只读防护 Hook，以及六类最小权限的专业子智能体（scout、elder、atelier、wright、lens、tribunal）。"
+    "en": "Multi-agent orchestration for ZCode: always-on dispatch protocol (SessionStart + UserPromptSubmit injection), a live agent-status side panel, four companion workflow skills (codemap, simplify, deepwork, verification), a PreToolUse Bash mutation guard, and six least-privilege specialist sub-agents (scout, elder, atelier, wright, lens, tribunal).",
+    "zh-CN": "ZCode 多智能体编排：常驻调度协议（SessionStart + UserPromptSubmit 注入）、实时智能体状态面板、四项配套工作流技能（codemap、simplify、deepwork、verification）、PreToolUse Bash 只读防护 Hook，以及六类最小权限的专业子智能体（scout、elder、atelier、wright、lens、tribunal）。"
   },
-  "version": "0.2.0",
+  "version": "0.4.1",
   "author": {
     "name": "Bertho Joris"
   },
@@ -18,9 +18,33 @@
     "codemap",
     "simplify",
     "deepwork",
-    "hooks"
+    "hooks",
+    "agent-panel"
   ],
   "commands": "commands",
   "skills": "skills",
-  "agents": "agents"
+  "agents": "agents",
+  "mcpServers": {
+    "maestro": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["${ZCODE_PLUGIN_ROOT}/dist/server.mjs"],
+      "timeoutMs": 60000
+    }
+  },
+  "ui": {
+    "surfaces": [
+      {
+        "id": "maestro-panel",
+        "title": {
+          "en-US": "Maestro Agents",
+          "zh-CN": "Maestro 智能体"
+        },
+        "icon": "cpu",
+        "server": "maestro",
+        "resourceUri": "ui://maestro/panel.html",
+        "availability": "session"
+      }
+    ]
+  }
 }

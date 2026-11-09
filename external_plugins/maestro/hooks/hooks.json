@@ -1,7 +1,60 @@
 {
-  "description": "Maestro PreToolUse Bash guard: enforces read-only Bash discipline on advisory/recon specialist lanes (scout, elder, atelier, tribunal, lens) and blocks catastrophic destructive shell commands across all lanes.",
+  "description": "Maestro hooks: always-on orchestration injection (SessionStart + UserPromptSubmit), live agent activity tracking for the side panel (PreToolUse/PostToolUse on Agent|Task, Stop), and the PreToolUse Bash mutation guard enforcing read-only discipline on advisory/recon specialist lanes and blocking catastrophic destructive shell commands across all lanes.",
   "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|clear|compact",
+        "hooks": [
+          {
+            "type": "process",
+            "command": "node",
+            "args": ["${ZCODE_PLUGIN_ROOT}/hooks/session-inject.mjs"],
+            "timeoutMs": 5000,
+            "statusMessage": "maestro: injecting orchestration context…"
+          },
+          {
+            "type": "process",
+            "command": "node",
+            "args": ["${ZCODE_PLUGIN_ROOT}/hooks/agent-status.mjs"],
+            "timeoutMs": 5000,
+            "statusMessage": "maestro: resetting lane status…"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "process",
+            "command": "node",
+            "args": ["${ZCODE_PLUGIN_ROOT}/hooks/session-inject.mjs"],
+            "timeoutMs": 5000,
+            "statusMessage": "maestro: routing hint…"
+          },
+          {
+            "type": "process",
+            "command": "node",
+            "args": ["${ZCODE_PLUGIN_ROOT}/hooks/agent-status.mjs"],
+            "timeoutMs": 5000,
+            "statusMessage": "maestro: lane clock…"
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
+      {
+        "matcher": "Agent|Task",
+        "hooks": [
+          {
+            "type": "process",
+            "command": "node",
+            "args": ["${ZCODE_PLUGIN_ROOT}/hooks/agent-status.mjs"],
+            "timeoutMs": 5000,
+            "statusMessage": "maestro: lane dispatched…"
+          }
+        ]
+      },
       {
         "matcher": "Bash",
         "hooks": [
@@ -13,6 +66,47 @@
             ],
             "timeoutMs": 5000,
             "statusMessage": "maestro: checking Bash mutation boundaries…"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Agent|Task",
+        "hooks": [
+          {
+            "type": "process",
+            "command": "node",
+            "args": ["${ZCODE_PLUGIN_ROOT}/hooks/agent-status.mjs"],
+            "timeoutMs": 5000,
+            "statusMessage": "maestro: lane finished…"
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "Agent|Task",
+        "hooks": [
+          {
+            "type": "process",
+            "command": "node",
+            "args": ["${ZCODE_PLUGIN_ROOT}/hooks/agent-status.mjs"],
+            "timeoutMs": 5000,
+            "statusMessage": "maestro: lane failed…"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "process",
+            "command": "node",
+            "args": ["${ZCODE_PLUGIN_ROOT}/hooks/agent-status.mjs"],
+            "timeoutMs": 5000,
+            "statusMessage": "maestro: lanes settled…"
           }
         ]
       }
